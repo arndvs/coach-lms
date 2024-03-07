@@ -7,16 +7,16 @@ npm run dev
 
 Initialize Prisma
 
-````bash
+```bash
 npx prisma init
-
+```
 
 Remove everything in the db
 
 ```bash
 npx prisma migrate reset
 
-````
+```
 
 Add new primsa fields in schema to node modules
 
