@@ -6,6 +6,7 @@ import { db } from '@/lib/db';
 import { IconBadge } from '@/components/icon-badge';
 import { TitleForm } from './_components/title-form';
 import { DescriptionForm } from './_components/description-form';
+import { ImageForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/image-form';
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // Get the user ID from the clerk session
@@ -66,6 +67,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             courseId={course.id}
           />
           <DescriptionForm
+            initialData={course}
+            courseId={course.id}
+          />
+          <ImageForm
             initialData={course}
             courseId={course.id}
           />

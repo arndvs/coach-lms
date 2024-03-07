@@ -8,6 +8,7 @@ import { Pencil } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { Course } from '@prisma/client';
 
 import {
   Form,
@@ -22,9 +23,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 interface DescriptionFormProps {
-  initialData: {
-    description: string;
-  };
+  initialData: Course;
   courseId: string;
 }
 
@@ -52,7 +51,9 @@ export const DescriptionForm = ({
     //resolver is a hook form feature that allows us to use zod to validate our form
     resolver: zodResolver(formSchema),
     // set the default values of the form to the initial data
-    defaultValues: initialData
+    defaultValues: {
+      description: initialData?.description || ''
+    }
   });
 
   // state to track if the form is submitting and if it is valid

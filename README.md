@@ -38,3 +38,6 @@ Run Prisma Studio to view the current prisma database
 npx prisma studio
 
 ```
+
+style the uploadthing theme:
+https://docs.uploadthing.com/theming
