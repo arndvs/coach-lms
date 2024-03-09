@@ -27,7 +27,7 @@ export async function DELETE(
       }
     });
 
-    // if the course does not exist, return an unauthorized response
+    // if the user isn't the course owner, return an unauthorized response
     if (!courseOwner) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
