@@ -108,8 +108,7 @@ export const CategoryForm = ({
                   <FormControl>
                     <Combobox
                       options={options}
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)} // Manually handling the onChange event
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />

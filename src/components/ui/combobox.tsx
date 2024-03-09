@@ -47,8 +47,8 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search option..." />
-          <CommandEmpty>No option found.</CommandEmpty>
+          {/* <CommandInput placeholder="Search option..." />
+          <CommandEmpty>No option found.</CommandEmpty> */}
           <CommandGroup>
             {options.map((option) => (
               <CommandItem
