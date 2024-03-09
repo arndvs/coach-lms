@@ -1,6 +1,11 @@
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react';
+import {
+  CircleDollarSign,
+  File,
+  LayoutDashboard,
+  ListChecks
+} from 'lucide-react';
 
 import { db } from '@/lib/db';
 import { IconBadge } from '@/components/icon-badge';
@@ -9,6 +14,7 @@ import { DescriptionForm } from './_components/description-form';
 import { ImageForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/image-form';
 import { CategoryForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/category-form';
 import { PriceForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/price-form';
+import { AttachmentForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/attachment-form';
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // Get the user ID from the clerk session
@@ -24,9 +30,18 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     // find the course by the id
     where: {
       id: params.courseId
+    },
+    // include the attachments
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }
     }
   });
 
+  // get the categories from the database
   const categories = await db.category.findMany({
     orderBy: {
       name: 'asc'
@@ -105,6 +120,16 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <h2 className="text-xl">Sell your course</h2>
             </div>
             <PriceForm
+              initialData={course}
+              courseId={course.id}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File} />
+              <h2 className="text-xl">Resources & Attachments</h2>
+            </div>
+            <AttachmentForm
               initialData={course}
               courseId={course.id}
             />
