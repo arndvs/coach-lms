@@ -7,6 +7,7 @@ import { IconBadge } from '@/components/icon-badge';
 import { TitleForm } from './_components/title-form';
 import { DescriptionForm } from './_components/description-form';
 import { ImageForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/image-form';
+import { CategoryForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/category-form';
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // Get the user ID from the clerk session
@@ -22,6 +23,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     // find the course by the id
     where: {
       id: params.courseId
+    }
+  });
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: 'asc'
     }
   });
 
@@ -73,6 +80,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           <ImageForm
             initialData={course}
             courseId={course.id}
+          />
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id
+            }))}
           />
         </div>
       </div>

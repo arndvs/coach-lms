@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 
-const f = createUploadthing();
+const createUploader = createUploadthing();
 
 const handleAuth = () => {
   // Get the user ID from the clerk session
@@ -17,7 +17,9 @@ export const ourFileRouter = {
   //   Define as many FileRoutes as you like, each with a unique routeSlug - takes in a file type and a middleware function
 
   // upload an image for a course
-  courseImage: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
+  courseImage: createUploader({
+    image: { maxFileSize: '4MB', maxFileCount: 1 }
+  })
     // Set permissions and file types for this FileRoute
     .middleware(() => handleAuth())
     .onUploadComplete(() => {
@@ -25,12 +27,14 @@ export const ourFileRouter = {
     }),
 
   // upload a file for a course
-  courseAttachment: f(['text', 'image', 'video', 'audio', 'pdf'])
+  courseAttachment: createUploader(['text', 'image', 'video', 'audio', 'pdf'])
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
 
   // upload a video for a chapter
-  chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: '512GB' } })
+  chapterVideo: createUploader({
+    video: { maxFileCount: 1, maxFileSize: '512GB' }
+  })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {})
 } satisfies FileRouter;
