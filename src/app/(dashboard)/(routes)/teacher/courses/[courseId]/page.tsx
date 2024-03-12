@@ -15,6 +15,7 @@ import { ImageForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]
 import { CategoryForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/category-form';
 import { PriceForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/price-form';
 import { AttachmentForm } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/attachment-form';
+import { ChaptersForm } from './_components/chapters-form';
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // Get the user ID from the clerk session
@@ -29,10 +30,17 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     // find the course by the id
     where: {
-      id: params.courseId
+      id: params.courseId,
+      userId
     },
-    // include the attachments
+    // include the chapters
     include: {
+      chapters: {
+        orderBy: {
+          position: 'desc'
+        }
+      },
+      // include the attachments
       attachments: {
         orderBy: {
           createdAt: 'desc'
@@ -59,7 +67,8 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.description,
     course.imageUrl,
     course.price,
-    course.categoryId
+    course.categoryId,
+    course.chapters.some((chapter) => chapter.isPublished)
   ];
 
   // get the number of required fields
@@ -112,7 +121,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
-            <div>TODO: Chapters</div>
+            <ChaptersForm
+              initialData={course}
+              courseId={course.id}
+            />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
