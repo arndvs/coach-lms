@@ -104,15 +104,11 @@ export const CategoryForm = ({
               control={form.control}
               name="categoryId"
               render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Combobox
-                      options={options}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <Combobox
+                  options={options}
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                />
               )}
             />
             <div className="flex items-center gap-x-2">

@@ -17,6 +17,7 @@ export const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
       // onClientUploadComplete is a callback that runs when the file is uploaded
       onClientUploadComplete={(res) => {
         // res is an array of the uploaded files
+        console.log(res);
         onChange(res?.[0].url);
       }}
       // onUploadError is a callback that runs if the file upload fails
