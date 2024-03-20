@@ -1,15 +1,19 @@
+// chapters-form.tsx
+
 'use client';
 
-import * as z from 'zod';
-import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Pencil, PlusCircle } from 'lucide-react';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 import { Chapter, Course } from '@prisma/client';
+import axios from 'axios';
+import { Loader2, PlusCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import * as z from 'zod';
 
+import { ChaptersList } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/chapters-list';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -18,8 +22,6 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 interface ChaptersFormProps {
@@ -71,8 +73,45 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     }
   };
 
+  // handle reordering of chapters - takes in an array of chapters and sends a put request to the server
+  const onReorder = async (updateData: { id: string; position: number }[]) => {
+    try {
+      // set isUpdating to true
+      setIsUpdating(true);
+
+      // send a put request to the server with the update data
+      //    const response = await axios.put(
+      //      `/api/courses/${courseId}/chapters/reorder`,
+      //      {
+      //        list: updateData
+      //      }
+      //    );
+
+      // send a put request to the server with the update data
+      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
+        list: updateData
+      });
+      // show a success toast and refresh the server component
+      toast.success('Chapters reordered');
+      router.refresh();
+    } catch {
+      toast.error('Something went wrong');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const onEdit = (id: string) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
+  };
+
   return (
-    <div className="mt-6 rounded-md border bg-slate-100 p-4">
+    <div className="relative mt-6 rounded-md border bg-slate-100 p-4">
+      {isUpdating && (
+        <div className="rounded-m absolute right-0 top-0 flex h-full w-full items-center justify-center bg-slate-500/20">
+          <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
+        </div>
+      )}
       <div className="flex items-center justify-between font-medium">
         Course Chapters
         <Button
@@ -130,7 +169,11 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
           )}
         >
           {!initialData.chapters.length && 'No chapters'}
-          {/* TODO: Add a list of chapters */}
+          <ChaptersList
+            onEdit={onEdit}
+            onReorder={onReorder}
+            items={initialData.chapters || []}
+          />
         </div>
       )}
       {!isCreating && (
