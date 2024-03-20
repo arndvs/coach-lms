@@ -7,7 +7,7 @@ import { Chapter, Course } from '@prisma/client';
 import axios from 'axios';
 import { Loader2, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
@@ -38,6 +38,8 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   // state to track if the form is in Creating mode
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const [chapters, setChapters] = useState(initialData.chapters);
+
   // toggle Creating mode
   const toggleCreating = () => {
     setIsCreating((current) => !current);
@@ -67,6 +69,8 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       toast.success('Chapter created');
       toggleCreating();
       // refresh the server component to get the updated data
+      form.reset();
+      // refresh the server component to get the updated data
       router.refresh();
     } catch {
       toast.error('Something went wrong');
@@ -76,30 +80,35 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   // handle reordering of chapters - takes in an array of chapters and sends a put request to the server
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
-      // set isUpdating to true
       setIsUpdating(true);
-
-      // send a put request to the server with the update data
-      //    const response = await axios.put(
-      //      `/api/courses/${courseId}/chapters/reorder`,
-      //      {
-      //        list: updateData
-      //      }
-      //    );
-
-      // send a put request to the server with the update data
       await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateData
       });
-      // show a success toast and refresh the server component
       toast.success('Chapters reordered');
-      router.refresh();
     } catch {
       toast.error('Something went wrong');
+      // if an error occurs, fetch the chapters from the server to ensure consistency
+      const response = await axios.get(`/api/courses/${courseId}/chapters`);
+      const chapters = response.data;
+      setChapters(chapters);
     } finally {
       setIsUpdating(false);
     }
   };
+
+  useEffect(() => {
+    const fetchChapters = async () => {
+      try {
+        const response = await axios.get(`/api/courses/${courseId}/chapters`);
+        const chapters = response.data;
+        setChapters(chapters);
+      } catch (error) {
+        console.error('Error fetching chapters:', error);
+      }
+    };
+
+    fetchChapters();
+  }, [courseId]);
 
   const onEdit = (id: string) => {
     router.push(`/teacher/courses/${courseId}/chapters/${id}`);
@@ -173,6 +182,8 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
             onEdit={onEdit}
             onReorder={onReorder}
             items={initialData.chapters || []}
+            chapters={chapters}
+            setChapters={setChapters}
           />
         </div>
       )}

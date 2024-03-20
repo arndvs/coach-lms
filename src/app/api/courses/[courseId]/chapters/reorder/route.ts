@@ -21,6 +21,7 @@ export async function PUT(
 
     // get the list from the request body
     const { list } = await req.json();
+    console.log('Received list:', list);
 
     // check if the user owns the course
     const ownCourse = await db.course.findUnique({
@@ -44,8 +45,17 @@ export async function PUT(
       });
     }
 
-    // return a success response
-    return new NextResponse('Success', { status: 200 });
+    // get the reordered chapters
+    const reorderedChapters = await db.chapter.findMany({
+      where: { courseId: params.courseId },
+      orderBy: { position: 'asc' }
+    });
+
+    // return the reordered chapters
+    return new NextResponse(JSON.stringify({ chapters: reorderedChapters }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (error) {
     console.log('[REORDER]', error);
     return new NextResponse('Internal Error', { status: 500 });

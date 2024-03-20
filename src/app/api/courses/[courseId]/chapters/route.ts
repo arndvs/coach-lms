@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 
 // create a new chapter
 export async function POST(
-  // access the request objectv
+  // access the request object
   req: Request,
   // get the course ID from the request parameters
   { params }: { params: { courseId: string } }
@@ -37,7 +37,7 @@ export async function POST(
       },
       // order the chapters by position in descending order to get the last chapter
       orderBy: {
-        position: 'desc'
+        position: 'asc'
       }
     });
 
@@ -53,8 +53,31 @@ export async function POST(
         position: newPosition
       }
     });
+
     // return the chapter as JSON
     return NextResponse.json(chapter);
+  } catch (error) {
+    console.log('[CHAPTERS]', error);
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+
+// fetch chapters for a course
+export async function GET(
+  req: Request,
+  { params }: { params: { courseId: string } }
+) {
+  try {
+    const chapters = await db.chapter.findMany({
+      where: {
+        courseId: params.courseId
+      },
+      orderBy: {
+        position: 'asc'
+      }
+    });
+
+    return NextResponse.json(chapters);
   } catch (error) {
     console.log('[CHAPTERS]', error);
     return new NextResponse('Internal Error', { status: 500 });
