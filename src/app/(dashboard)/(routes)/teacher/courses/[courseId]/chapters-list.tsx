@@ -85,6 +85,7 @@ export const ChaptersList = ({
     // create a new array of chapters
     const items = Array.from(chapters);
     // remove the item from the source index and store it in reorderedItem
+
     const [reorderedItem] = items.splice(result.source.index, 1);
     // insert the reorderedItem at the destination index
     items.splice(result.destination.index, 0, reorderedItem);
@@ -107,6 +108,8 @@ export const ChaptersList = ({
   if (!isMounted) {
     return null;
   }
+  // sort the chapters based on their position
+  const sortedChapters = chapters.sort((a, b) => a.position - b.position);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -116,7 +119,7 @@ export const ChaptersList = ({
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {chapters.map((chapter, index) => (
+            {sortedChapters.map((chapter, index) => (
               <Draggable
                 key={chapter.id}
                 draggableId={chapter.id}

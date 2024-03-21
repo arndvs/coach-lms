@@ -1,3 +1,5 @@
+// chapters route
+
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
@@ -25,24 +27,21 @@ export async function POST(
         userId: userId
       }
     });
+
     // if the user isn't the course owner, return an unauthorized response
     if (!courseOwner) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    // attempt to fetch the last chapter for positioning
-    const lastChapter = await db.chapter.findFirst({
+    // fetch the total number of chapters for the course
+    const chapterCount = await db.chapter.count({
       where: {
         courseId: params.courseId
-      },
-      // order the chapters by position in descending order to get the last chapter
-      orderBy: {
-        position: 'asc'
       }
     });
 
     // if there is a last chapter, increment the position by 1, otherwise, set the position to 1
-    const newPosition = lastChapter ? lastChapter.position + 1 : 1;
+    const newPosition = chapterCount;
 
     // create a new chapter
     const chapter = await db.chapter.create({
@@ -73,7 +72,7 @@ export async function GET(
         courseId: params.courseId
       },
       orderBy: {
-        position: 'asc'
+        position: 'desc'
       }
     });
 

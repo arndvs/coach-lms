@@ -7,7 +7,7 @@ import { Chapter, Course } from '@prisma/client';
 import axios from 'axios';
 import { Loader2, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
@@ -70,8 +70,11 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       toggleCreating();
       // refresh the server component to get the updated data
       form.reset();
-      // refresh the server component to get the updated data
-      router.refresh();
+      // fetch the updated chapters
+      const response = await axios.get(`/api/courses/${courseId}/chapters`);
+      const updatedChapters = response.data;
+      // update the chapters state in the ChaptersList component
+      setChapters(updatedChapters);
     } catch {
       toast.error('Something went wrong');
     }
@@ -96,19 +99,20 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     }
   };
 
-  useEffect(() => {
-    const fetchChapters = async () => {
-      try {
-        const response = await axios.get(`/api/courses/${courseId}/chapters`);
-        const chapters = response.data;
-        setChapters(chapters);
-      } catch (error) {
-        console.error('Error fetching chapters:', error);
-      }
-    };
-
-    fetchChapters();
+  // fetch chapters and update the state
+  const fetchChapters = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/courses/${courseId}/chapters`);
+      const chapters = response.data;
+      setChapters(chapters);
+    } catch (error) {
+      console.error('Error fetching chapters:', error);
+    }
   }, [courseId]);
+
+  useEffect(() => {
+    fetchChapters();
+  }, [courseId, fetchChapters]);
 
   const onEdit = (id: string) => {
     router.push(`/teacher/courses/${courseId}/chapters/${id}`);
