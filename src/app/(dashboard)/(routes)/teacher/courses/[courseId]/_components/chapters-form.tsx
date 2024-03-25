@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 
-import { ChaptersList } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/chapters-list';
+import { ChaptersList } from '@/app/(dashboard)/(routes)/teacher/courses/[courseId]/_components/chapters-list';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -80,6 +80,21 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     }
   };
 
+  // fetch chapters and update the state
+  const fetchChapters = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/courses/${courseId}/chapters`);
+      const chapters = response.data;
+      setChapters(chapters);
+    } catch (error) {
+      console.error('Error fetching chapters:', error);
+    }
+  }, [courseId]);
+
+  useEffect(() => {
+    fetchChapters();
+  }, [courseId, fetchChapters]);
+
   // handle reordering of chapters - takes in an array of chapters and sends a put request to the server
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
@@ -103,21 +118,6 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       setIsUpdating(false);
     }
   };
-
-  // fetch chapters and update the state
-  const fetchChapters = useCallback(async () => {
-    try {
-      const response = await axios.get(`/api/courses/${courseId}/chapters`);
-      const chapters = response.data;
-      setChapters(chapters);
-    } catch (error) {
-      console.error('Error fetching chapters:', error);
-    }
-  }, [courseId]);
-
-  useEffect(() => {
-    fetchChapters();
-  }, [courseId, fetchChapters]);
 
   const onEdit = (id: string) => {
     router.push(`/teacher/courses/${courseId}/chapters/${id}`);

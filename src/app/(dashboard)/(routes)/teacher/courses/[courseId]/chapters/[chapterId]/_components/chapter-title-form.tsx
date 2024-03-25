@@ -19,29 +19,29 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-interface TitleFormProps {
+interface ChapterTitleFormProps {
   initialData: {
     title: string;
   };
   courseId: string;
+  chapterId: string;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: 'Title is required'
-  })
+  title: z.string().min(1)
 });
 
-export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+export const ChapterTitleForm = ({
+  initialData,
+  courseId,
+  chapterId
+}: ChapterTitleFormProps) => {
   // state to track if the form is in edit mode
   const [isEditing, setIsEditing] = useState(false);
-
   // toggle edit mode
   const toggleEdit = () => setIsEditing((current) => !current);
-
   // initialize router, used to navigate between pages
   const router = useRouter();
-
   // create form
   const form = useForm<z.infer<typeof formSchema>>({
     // initialize the form with the form schema
@@ -49,16 +49,18 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     // set the default values of the form to the initial data
     defaultValues: initialData
   });
-
   // state to track if the form is submitting and if it is valid
   const { isSubmitting, isValid } = form.formState;
-
   // handle form submission - takes in the form values and sends a post request to the server
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // patch updates the course with the new values
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success('Course updated');
+      // patch updates the chapter with the new values
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
+      toast.success('Chapter updated');
       toggleEdit();
       // refresh the server component to get the updated data
       router.refresh();
@@ -70,7 +72,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   return (
     <div className="mt-6 rounded-md border bg-slate-100 p-4">
       <div className="flex items-center justify-between font-medium">
-        Course title
+        Chapter title
         <Button
           onClick={toggleEdit}
           variant="ghost"
@@ -100,7 +102,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder="e.g. 'Introduction to the course'"
                       {...field}
                     />
                   </FormControl>
