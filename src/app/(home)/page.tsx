@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -89,7 +90,7 @@ const footerNavigation = {
     {
       name: 'Facebook',
       href: '#',
-      icon: (props) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -106,7 +107,7 @@ const footerNavigation = {
     {
       name: 'Instagram',
       href: '#',
-      icon: (props) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -123,7 +124,7 @@ const footerNavigation = {
     {
       name: 'X',
       href: '#',
-      icon: (props) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -136,7 +137,7 @@ const footerNavigation = {
     {
       name: 'GitHub',
       href: '#',
-      icon: (props) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -153,7 +154,7 @@ const footerNavigation = {
     {
       name: 'YouTube',
       href: '#',
-      icon: (props) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -187,10 +188,12 @@ export default function Home() {
                 className="-m-1.5 p-1.5"
               >
                 <span className="sr-only">Your Company</span>
-                <img
+                <Image
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt=""
+                  width="32"
+                  height="32"
                 />
               </a>
             </div>
@@ -241,7 +244,7 @@ export default function Home() {
                   className="-m-1.5 p-1.5"
                 >
                   <span className="sr-only">Your Company</span>
-                  <img
+                  <Image
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                     alt=""
@@ -287,7 +290,7 @@ export default function Home() {
         </header>
 
         <div className="relative isolate overflow-hidden pt-14">
-          {/* <img
+          {/* <Image
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
             alt=""
             className="absolute inset-0 -z-10 h-full w-full object-cover"
@@ -360,7 +363,7 @@ export default function Home() {
                 className="-m-1.5 p-1.5"
               >
                 <span className="sr-only">Your Company</span>
-                <img
+                <Image
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt=""
@@ -414,7 +417,7 @@ export default function Home() {
                   className="-m-1.5 p-1.5"
                 >
                   <span className="sr-only">Your Company</span>
-                  <img
+                  <Image
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
@@ -540,7 +543,7 @@ export default function Home() {
                   <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                     <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -550,7 +553,7 @@ export default function Home() {
                     </div>
                     <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -558,7 +561,7 @@ export default function Home() {
                         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                       </div>
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -568,7 +571,7 @@ export default function Home() {
                     </div>
                     <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -576,7 +579,7 @@ export default function Home() {
                         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                       </div>
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -604,10 +607,12 @@ export default function Home() {
                 className="-m-1.5 p-1.5"
               >
                 <span className="sr-only">Your Company</span>
-                <img
+                <Image
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt=""
+                  width="32"
+                  height="32"
                 />
               </a>
             </div>
@@ -658,10 +663,12 @@ export default function Home() {
                   className="-m-1.5 p-1.5"
                 >
                   <span className="sr-only">Your Company</span>
-                  <img
+                  <Image
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""
+                    width={32}
+                    height={32}
                   />
                 </a>
                 <button
@@ -773,7 +780,7 @@ export default function Home() {
                   <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                     <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -783,7 +790,7 @@ export default function Home() {
                     </div>
                     <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -791,7 +798,7 @@ export default function Home() {
                         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                       </div>
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -801,7 +808,7 @@ export default function Home() {
                     </div>
                     <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -809,7 +816,7 @@ export default function Home() {
                         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                       </div>
                       <div className="relative">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
                           alt=""
                           className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
@@ -880,7 +887,7 @@ export default function Home() {
 
           {/* Image section */}
           <div className="mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
               alt=""
               className="aspect-[5/2] w-full object-cover xl:rounded-3xl"
@@ -954,35 +961,35 @@ export default function Home() {
                 Trusted by the world’s most innovative teams
               </h2>
               <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-                <img
+                <Image
                   className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
                   src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg"
                   alt="Transistor"
                   width={158}
                   height={48}
                 />
-                <img
+                <Image
                   className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
                   src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg"
                   alt="Reform"
                   width={158}
                   height={48}
                 />
-                <img
+                <Image
                   className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
                   src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg"
                   alt="Tuple"
                   width={158}
                   height={48}
                 />
-                <img
+                <Image
                   className="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1"
                   src="https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg"
                   alt="SavvyCal"
                   width={158}
                   height={48}
                 />
-                <img
+                <Image
                   className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
                   src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg"
                   alt="Statamic"
@@ -1011,7 +1018,7 @@ export default function Home() {
             >
               {team.map((person) => (
                 <li key={person.name}>
-                  <img
+                  <Image
                     className="mx-auto h-24 w-24 rounded-full"
                     src={person.imageUrl}
                     alt=""
@@ -1043,7 +1050,7 @@ export default function Home() {
                   key={post.id}
                   className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
                 >
-                  <img
+                  <Image
                     src={post.imageUrl}
                     alt=""
                     className="absolute inset-0 -z-10 h-full w-full object-cover"
@@ -1070,7 +1077,7 @@ export default function Home() {
                         />
                       </svg>
                       <div className="flex gap-x-2.5">
-                        <img
+                        <Image
                           src={post.author.imageUrl}
                           alt=""
                           className="h-6 w-6 flex-none rounded-full bg-white/10"
