@@ -180,7 +180,11 @@ export default function Home() {
       {/* <div className="bg-red-500 p-12">
         <NovelEditor />
       </div> */}
-      <TailwindAdvancedEditor />
+      <div className="flex min-h-screen flex-col items-center gap-4 py-4 sm:px-5">
+        <div className="relative w-full max-w-screen-lg">
+          <TailwindAdvancedEditor />
+        </div>
+      </div>
       {/* <div className="bg-white">
 
         <header className="absolute inset-x-0 top-0 z-50">
