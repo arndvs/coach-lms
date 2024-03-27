@@ -3,9 +3,11 @@ import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import '@/app/styles/prosemirror.css';
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import { extractRouterConfig } from 'uploadthing/server';
 import { ourFileRouter } from '@/app/api/uploadthing/core';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +37,7 @@ export default function RootLayout({
           {/* // TODO: replace react-hot-toast with sonner */}
           <ToastProvider />
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>

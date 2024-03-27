@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import NovelEditor from '@/components/editor/novel-editor';
+import TailwindAdvancedEditor from '@/components/editor/editor';
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -175,8 +177,16 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <>
-      <div className="bg-white">
-        {/* Header */}
+      {/* <div className="bg-red-500 p-12">
+        <NovelEditor />
+      </div> */}
+      <div className="flex min-h-screen flex-col items-center gap-4 py-4 sm:px-5">
+        <div className="relative w-full max-w-screen-lg">
+          <TailwindAdvancedEditor />
+        </div>
+      </div>
+      {/* <div className="bg-white">
+
         <header className="absolute inset-x-0 top-0 z-50">
           <nav
             className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -288,7 +298,7 @@ export default function Home() {
         </header>
 
         <main className="isolate">
-          {/* Hero section */}
+
           <div className="relative isolate -z-10">
             <svg
               className="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
@@ -407,7 +417,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Content section */}
+
           <div className="mx-auto -mt-12 max-w-7xl px-6 sm:mt-0 lg:px-8 xl:-mt-8">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -462,7 +472,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Image section */}
+
           <div className="mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8">
             <img
               src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
@@ -471,7 +481,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Values section */}
+
           <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -492,7 +502,7 @@ export default function Home() {
             </dl>
           </div>
 
-          {/* Logo cloud */}
+
           <div className="relative isolate -z-10 mt-32 sm:mt-48">
             <div className="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)]">
               <svg
@@ -577,7 +587,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Team section */}
+
           <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -611,7 +621,7 @@ export default function Home() {
             </ul>
           </div>
 
-          {/* Blog section */}
+
           <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -675,7 +685,7 @@ export default function Home() {
           </div>
         </main>
 
-        {/* Footer */}
+
         <footer className="mx-auto mt-40 max-w-7xl overflow-hidden px-6 pb-20 sm:mt-64 sm:pb-24 lg:px-8">
           <nav
             className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
@@ -714,7 +724,7 @@ export default function Home() {
             &copy; 2020 Your Company, Inc. All rights reserved.
           </p>
         </footer>
-      </div>
+      </div> */}
     </>
   );
 }
