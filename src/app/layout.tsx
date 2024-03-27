@@ -2,7 +2,7 @@ import { ToastProvider } from '@/components/providers/toaster-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import '@/app/styles/globals.css';
 import '@/app/styles/prosemirror.css';
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import { extractRouterConfig } from 'uploadthing/server';

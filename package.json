@@ -62,7 +62,6 @@
     "use-debounce": "^9.0.3",
     "zod": "^3.22.2",
     "zustand": "^4.4.1",
-
     "eventsource-parser": "^0.1.0",
     "openai": "^4.27.0",
     "react-markdown": "^8.0.7",
