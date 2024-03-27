@@ -3,6 +3,13 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@/lib/db';
 
+// import the Mux SDK
+import Mux from '@mux/mux-node';
+const { Video } = new Mux(
+  process.env.MUX_TOKEN_ID!,
+  process.env.MUX_TOKEN_SECRET!
+);
+
 export async function PATCH(
   req: Request,
   // get the courseId and chapterId from the params
@@ -46,7 +53,49 @@ export async function PATCH(
       }
     });
 
-    // TODO: Handle Video Upload
+    // VIDEO UPLOAD
+    // if the videoUrl exists in the values, upload the video to Mux
+    if (values.videoUrl) {
+      // find the existing muxData for the chapter
+      const existingMuxData = await db.muxData.findFirst({
+        where: {
+          chapterId: params.chapterId
+        }
+      });
+
+      // if the existing muxData exists, delete the asset and the muxData
+      if (existingMuxData) {
+        // delete the asset from Mux
+        await Video.Assets.del(existingMuxData.assetId);
+        // delete the muxData from the database
+        await db.muxData.delete({
+          // delete the muxData where the id matches the existingMuxData id
+          where: {
+            id: existingMuxData.id
+          }
+        });
+      }
+
+      // create a new asset in Mux
+      const asset = await Video.Assets.create({
+        // set the input to the videoUrl
+        input: values.videoUrl,
+        // set the playback policy to public
+        playback_policy: 'public',
+        // set the new asset to be a master asset
+        test: false
+      });
+
+      // create a new muxData in the database
+      await db.muxData.create({
+        // set the chapterId to the chapterId, the assetId to the asset id, and the playbackId to the asset playback id
+        data: {
+          chapterId: params.chapterId,
+          assetId: asset.id,
+          playbackId: asset.playback_ids?.[0]?.id
+        }
+      });
+    }
 
     return NextResponse.json(chapter);
   } catch (error) {
