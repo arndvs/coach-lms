@@ -38,7 +38,6 @@ import { uploadFn } from './image-upload';
 import { Separator } from '@radix-ui/react-separator';
 import {
   aiHighlight,
-  dragAndDrop,
   horizontalRule,
   placeholder,
   starterKit,
@@ -59,8 +58,7 @@ const extensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  slashCommand,
-  dragAndDrop
+  slashCommand
 ];
 
 const TailwindAdvancedEditor = () => {

@@ -12,12 +12,19 @@ import {
 import { UploadImagesPlugin } from 'novel/plugins';
 
 import { cx } from 'class-variance-authority';
-import DragAndDrop from '@/components/editor/extensions/drag-and-drop';
 
 //TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
 const aiHighlight = AIHighlight;
 
-const placeholder = Placeholder;
+const placeholder = Placeholder.configure({
+  placeholder: ({ node }) => {
+    if (node.type.name === 'heading') {
+      return `Heading ${node.attrs.level}`;
+    }
+    return "Press '/' for commands";
+  },
+  includeChildren: true
+});
 
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
@@ -108,8 +115,6 @@ const starterKit = StarterKit.configure({
   gapcursor: false
 });
 
-const dragAndDrop = DragAndDrop;
-
 export {
   starterKit,
   placeholder,
@@ -119,6 +124,5 @@ export {
   taskList,
   taskItem,
   horizontalRule,
-  aiHighlight,
-  dragAndDrop
+  aiHighlight
 };
