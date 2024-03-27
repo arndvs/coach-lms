@@ -36,17 +36,28 @@ import GenerativeMenuSwitch from './generative/generative-menu-switch';
 import { handleImageDrop, handleImagePaste } from 'novel/plugins';
 import { uploadFn } from './image-upload';
 import { Separator } from '@radix-ui/react-separator';
+import {
+  aiHighlight,
+  horizontalRule,
+  placeholder,
+  starterKit,
+  taskItem,
+  taskList,
+  tiptapImage,
+  tiptapLink,
+  updatedImage
+} from '@/components/editor/extensions';
 
 const extensions = [
-  StarterKit,
-  Placeholder,
-  TiptapLink,
-  TiptapImage,
-  UpdatedImage,
-  TaskList,
-  TaskItem,
-  HorizontalRule,
-  AIHighlight,
+  starterKit,
+  placeholder,
+  tiptapLink,
+  tiptapImage,
+  updatedImage,
+  taskList,
+  taskItem,
+  horizontalRule,
+  aiHighlight,
   slashCommand
 ];
 
@@ -80,84 +91,82 @@ const TailwindAdvancedEditor = () => {
   if (!initialContent) return null;
 
   return (
-    <div className="tiptap ProseMirror prose prose-lg dark:prose-invert prose-headings:font-title font-default max-w-full focus:outline-none">
-      <div className="relative w-full max-w-screen-lg">
-        <div className="bg-accent text-muted-foreground absolute right-5 top-5 z-10 mb-5 rounded-lg px-2 py-1 text-sm">
-          {saveStatus}
-        </div>
-        <EditorRoot>
-          <EditorContent
-            initialContent={initialContent}
-            extensions={extensions}
-            className="border-muted bg-background relative min-h-[500px] w-full max-w-screen-lg sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
-            editorProps={{
-              handleDOMEvents: {
-                keydown: (_view, event) => handleCommandNavigation(event)
-              },
-              handlePaste: (view, event) =>
-                handleImagePaste(view, event, uploadFn),
-              handleDrop: (view, event, _slice, moved) =>
-                handleImageDrop(view, event, moved, uploadFn),
-              attributes: {
-                class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
-              }
-            }}
-            onUpdate={({ editor }) => {
-              debouncedUpdates(editor);
-              setSaveStatus('Unsaved');
-            }}
-            slotAfter={<ImageResizer />}
-          >
-            <EditorCommand className="border-muted bg-background z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border px-1 py-2 shadow-md transition-all">
-              <EditorCommandEmpty className="text-muted-foreground px-2">
-                No results
-              </EditorCommandEmpty>
-              <EditorCommandList>
-                {suggestionItems.map((item) => (
-                  <EditorCommandItem
-                    value={item.title}
-                    onCommand={(val) => item.command && item.command(val)}
-                    className={`hover:bg-accent aria-selected:bg-accent flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm `}
-                    key={item.title}
-                  >
-                    <div className="border-muted bg-background flex h-10 w-10 items-center justify-center rounded-md border">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <p className="font-medium">{item.title}</p>
-                      <p className="text-muted-foreground text-xs">
-                        {item.description}
-                      </p>
-                    </div>
-                  </EditorCommandItem>
-                ))}
-              </EditorCommandList>
-            </EditorCommand>
-            <GenerativeMenuSwitch
-              open={openAI}
-              onOpenChange={setOpenAI}
-            >
-              <Separator orientation="vertical" />
-              <NodeSelector
-                open={openNode}
-                onOpenChange={setOpenNode}
-              />
-              <Separator orientation="vertical" />
-              <LinkSelector
-                open={openLink}
-                onOpenChange={setOpenLink}
-              />
-              <Separator orientation="vertical" />
-              <TextButtons />
-              <Separator orientation="vertical" />
-              <ColorSelector
-                open={openColor}
-                onOpenChange={setOpenColor}
-              />
-            </GenerativeMenuSwitch>
-          </EditorContent>
-        </EditorRoot>
+    <div className="relative w-full max-w-screen-lg">
+      <div className="bg-accent text-muted-foreground absolute right-5 top-5 z-10 mb-5 rounded-lg px-2 py-1 text-sm">
+        {saveStatus}
       </div>
+      <EditorRoot>
+        <EditorContent
+          initialContent={initialContent}
+          extensions={extensions}
+          className="border-muted bg-background relative min-h-[500px] w-full max-w-screen-lg sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
+          editorProps={{
+            handleDOMEvents: {
+              keydown: (_view, event) => handleCommandNavigation(event)
+            },
+            handlePaste: (view, event) =>
+              handleImagePaste(view, event, uploadFn),
+            handleDrop: (view, event, _slice, moved) =>
+              handleImageDrop(view, event, moved, uploadFn),
+            attributes: {
+              class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
+            }
+          }}
+          onUpdate={({ editor }) => {
+            debouncedUpdates(editor);
+            setSaveStatus('Unsaved');
+          }}
+          slotAfter={<ImageResizer />}
+        >
+          <EditorCommand className="border-muted bg-background z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border px-1 py-2 shadow-md transition-all">
+            <EditorCommandEmpty className="text-muted-foreground px-2">
+              No results
+            </EditorCommandEmpty>
+            <EditorCommandList>
+              {suggestionItems.map((item) => (
+                <EditorCommandItem
+                  value={item.title}
+                  onCommand={(val) => item.command && item.command(val)}
+                  className={`hover:bg-accent aria-selected:bg-accent flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm `}
+                  key={item.title}
+                >
+                  <div className="border-muted bg-background flex h-10 w-10 items-center justify-center rounded-md border">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {item.description}
+                    </p>
+                  </div>
+                </EditorCommandItem>
+              ))}
+            </EditorCommandList>
+          </EditorCommand>
+          <GenerativeMenuSwitch
+            open={openAI}
+            onOpenChange={setOpenAI}
+          >
+            <Separator orientation="vertical" />
+            <NodeSelector
+              open={openNode}
+              onOpenChange={setOpenNode}
+            />
+            <Separator orientation="vertical" />
+            <LinkSelector
+              open={openLink}
+              onOpenChange={setOpenLink}
+            />
+            <Separator orientation="vertical" />
+            <TextButtons />
+            <Separator orientation="vertical" />
+            <ColorSelector
+              open={openColor}
+              onOpenChange={setOpenColor}
+            />
+          </GenerativeMenuSwitch>
+        </EditorContent>
+      </EditorRoot>
     </div>
   );
 };

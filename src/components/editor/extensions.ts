@@ -6,8 +6,8 @@ import {
   TaskItem,
   HorizontalRule,
   StarterKit,
-  Placeholder,
-  AIHighlight
+  AIHighlight,
+  Placeholder
 } from 'novel/extensions';
 import { UploadImagesPlugin } from 'novel/plugins';
 
@@ -15,8 +15,17 @@ import { cx } from 'class-variance-authority';
 
 //TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
 const aiHighlight = AIHighlight;
-//You can overwrite the placeholder with your own configuration
-const placeholder = Placeholder;
+
+const placeholder = Placeholder.configure({
+  placeholder: ({ node }) => {
+    if (node.type.name === 'heading') {
+      return `Heading ${node.attrs.level}`;
+    }
+    return "Press '/' for commands, or '++' for AI autocomplete...";
+  },
+  includeChildren: true
+});
+
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
     class: cx(
