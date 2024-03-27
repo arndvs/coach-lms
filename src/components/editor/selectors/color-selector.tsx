@@ -14,11 +14,6 @@ export interface BubbleColorMenuItem {
   color: string;
 }
 
-interface ColorSelectorProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
 const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
     name: 'Default',

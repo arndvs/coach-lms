@@ -6,14 +6,16 @@ import {
   TaskItem,
   HorizontalRule,
   StarterKit,
-  Placeholder
+  Placeholder,
+  AIHighlight
 } from 'novel/extensions';
+import { UploadImagesPlugin } from 'novel/plugins';
 
 import { cx } from 'class-variance-authority';
 
-// TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
-
-// You can overwrite the placeholder with your own configuration
+//TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
+const aiHighlight = AIHighlight;
+//You can overwrite the placeholder with your own configuration
 const placeholder = Placeholder;
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
@@ -23,14 +25,35 @@ const tiptapLink = TiptapLink.configure({
   }
 });
 
+const tiptapImage = TiptapImage.extend({
+  addProseMirrorPlugins() {
+    return [
+      UploadImagesPlugin({
+        imageClass: cx('opacity-40 rounded-lg border border-stone-200')
+      })
+    ];
+  }
+}).configure({
+  allowBase64: true,
+  HTMLAttributes: {
+    class: cx('rounded-lg border border-muted')
+  }
+});
+
+const updatedImage = UpdatedImage.configure({
+  HTMLAttributes: {
+    class: cx('rounded-lg border border-muted')
+  }
+});
+
 const taskList = TaskList.configure({
   HTMLAttributes: {
-    class: cx('not-prose pl-2')
+    class: cx('not-prose pl-2 ')
   }
 });
 const taskItem = TaskItem.configure({
   HTMLAttributes: {
-    class: cx('flex items-start my-4')
+    class: cx('flex gap-2 items-start my-4')
   },
   nested: true
 });
@@ -64,7 +87,9 @@ const starterKit = StarterKit.configure({
   },
   codeBlock: {
     HTMLAttributes: {
-      class: cx('rounded-sm bg-muted border p-5 font-mono font-medium')
+      class: cx(
+        'rounded-md bg-muted text-muted-foreground border p-5 font-mono font-medium'
+      )
     }
   },
   code: {
@@ -81,13 +106,14 @@ const starterKit = StarterKit.configure({
   gapcursor: false
 });
 
-export const defaultExtensions = [
+export {
   starterKit,
   placeholder,
   tiptapLink,
-  TiptapImage,
-  UpdatedImage,
+  tiptapImage,
+  updatedImage,
   taskList,
   taskItem,
-  horizontalRule
-];
+  horizontalRule,
+  aiHighlight
+};

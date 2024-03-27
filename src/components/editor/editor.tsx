@@ -12,8 +12,19 @@ import {
   EditorInstance,
   EditorCommandList
 } from 'novel';
-import { ImageResizer, handleCommandNavigation } from 'novel/extensions';
-import { defaultExtensions } from './extensions';
+import {
+  AIHighlight,
+  HorizontalRule,
+  ImageResizer,
+  Placeholder,
+  StarterKit,
+  TaskItem,
+  TaskList,
+  TiptapImage,
+  TiptapLink,
+  UpdatedImage,
+  handleCommandNavigation
+} from 'novel/extensions';
 
 import { NodeSelector } from './selectors/node-selector';
 import { LinkSelector } from './selectors/link-selector';
@@ -26,7 +37,18 @@ import { handleImageDrop, handleImagePaste } from 'novel/plugins';
 import { uploadFn } from './image-upload';
 import { Separator } from '@radix-ui/react-separator';
 
-const extensions = [...defaultExtensions, slashCommand];
+const extensions = [
+  StarterKit,
+  Placeholder,
+  TiptapLink,
+  TiptapImage,
+  UpdatedImage,
+  TaskList,
+  TaskItem,
+  HorizontalRule,
+  AIHighlight,
+  slashCommand
+];
 
 const TailwindAdvancedEditor = () => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(
