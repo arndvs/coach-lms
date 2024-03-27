@@ -34,7 +34,7 @@ const GenerativeMenuSwitch = ({
           editor?.chain().unsetHighlight().run();
         }
       }}
-      className="border-muted bg-background flex w-fit max-w-[90vw] overflow-hidden rounded-md border shadow-xl"
+      className="border-muted bg-background flex w-fit max-w-[100vw] overflow-hidden rounded-md border shadow-xl"
     >
       {open && (
         <AISelector
@@ -51,7 +51,7 @@ const GenerativeMenuSwitch = ({
             size="sm"
           >
             <Magic className="h-5 w-5" />
-            Ask AI
+            AI
           </Button>
           {children}
         </Fragment>
