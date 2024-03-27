@@ -38,6 +38,7 @@ import { uploadFn } from './image-upload';
 import { Separator } from '@radix-ui/react-separator';
 import {
   aiHighlight,
+  dragAndDrop,
   horizontalRule,
   placeholder,
   starterKit,
@@ -58,7 +59,8 @@ const extensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  slashCommand
+  slashCommand,
+  dragAndDrop
 ];
 
 const TailwindAdvancedEditor = () => {
@@ -92,14 +94,14 @@ const TailwindAdvancedEditor = () => {
 
   return (
     <div className="relative w-full max-w-screen-lg">
-      <div className="bg-accent text-muted-foreground absolute right-5 top-5 z-10 mb-5 rounded-lg px-2 py-1 text-sm">
+      <div className="bg-accent text-muted-foreground absolute right-5 top-14 z-10 mb-5 rounded-lg px-2 py-1 text-sm">
         {saveStatus}
       </div>
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
           extensions={extensions}
-          className="border-muted bg-background relative min-h-[500px] w-full max-w-screen-lg sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
+          className="border-muted bg-background relative min-h-[500px] w-full max-w-screen-lg p-12 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event)
