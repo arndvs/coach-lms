@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export const Logo = () => {
   return (
@@ -7,6 +7,7 @@ export const Logo = () => {
       width={130}
       alt="logo"
       src="/logo.svg"
+      priority
     />
-  )
-}
+  );
+};
