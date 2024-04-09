@@ -10,17 +10,23 @@ const { Video } = new Mux(
   process.env.MUX_TOKEN_SECRET!
 );
 
+// Delete the chapter
 export async function DELETE(
+  // get the request
   req: Request,
+  // get the courseId and chapterId from the params
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {
+    // get the userId from the clerk session
     const { userId } = auth();
 
+    // if the user is not logged in, return an unauthorized response
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+    // check if the user is the owner of the course
     const ownCourse = await db.course.findUnique({
       where: {
         id: params.courseId,
@@ -28,10 +34,12 @@ export async function DELETE(
       }
     });
 
+    // if the user isn't the course owner, return an unauthorized response
     if (!ownCourse) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+    // get the chapter from the database
     const chapter = await db.chapter.findUnique({
       where: {
         id: params.chapterId,
@@ -39,10 +47,13 @@ export async function DELETE(
       }
     });
 
+    // if the chapter doesn't exist, return a not found response
     if (!chapter) {
       return new NextResponse('Not Found', { status: 404 });
     }
 
+    // cleanup the function for assets
+    // if the chapter has a videoUrl, get the muxData for the chapter
     if (chapter.videoUrl) {
       const existingMuxData = await db.muxData.findFirst({
         where: {
@@ -50,6 +61,7 @@ export async function DELETE(
         }
       });
 
+      // if the existing muxData exists, delete the asset and the muxData
       if (existingMuxData) {
         await Video.Assets.del(existingMuxData.assetId);
         await db.muxData.delete({
@@ -60,12 +72,15 @@ export async function DELETE(
       }
     }
 
+    // delete the chapter from the database
     const deletedChapter = await db.chapter.delete({
       where: {
         id: params.chapterId
       }
     });
 
+    // course cannot be published if there are no published chapters
+    // get all the published chapters in the course
     const publishedChaptersInCourse = await db.chapter.findMany({
       where: {
         courseId: params.courseId,
@@ -73,6 +88,7 @@ export async function DELETE(
       }
     });
 
+    // if there are no published chapters in the course, set the course to unpublished
     if (!publishedChaptersInCourse.length) {
       await db.course.update({
         where: {
@@ -84,6 +100,7 @@ export async function DELETE(
       });
     }
 
+    //  return the response with the deleted chapter
     return NextResponse.json(deletedChapter);
   } catch (error) {
     console.log('[CHAPTER_ID_DELETE]', error);

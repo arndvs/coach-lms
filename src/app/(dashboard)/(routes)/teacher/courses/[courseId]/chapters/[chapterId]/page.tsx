@@ -56,6 +56,7 @@ const ChapterIdPage = async ({
   // create a completion text that shows the number of completed fields out of the total fields
   const completionText = `(${completedFields}/${totalFields})`;
 
+  // check if all the required fields in the requiredFields array are true
   const isComplete = requiredFields.every(Boolean);
 
   return (

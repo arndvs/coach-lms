@@ -43,41 +43,6 @@ export const ChaptersList = ({
     setChapters(items);
   }, [items, setChapters]);
 
-  //   // handle drag and drop
-  //   const onDragEnd = (result: DropResult) => {
-  //     // if there is no destination, break out of the function
-  //     if (!result.destination) return;
-
-  //     // create a new array of chapters
-  //     const items = Array.from(chapters);
-  //     // remove the item from the source index and store it in reorderedItem
-  //     const [reorderedItem] = items.splice(result.source.index, 1);
-
-  //     // insert the reorderedItem at the destination index
-  //     items.splice(result.destination.index, 0, reorderedItem);
-
-  //     // get the start and end index of the reordered items
-  //     const startIndex = Math.min(result.source.index, result.destination.index);
-  //     const endIndex = Math.max(result.source.index, result.destination.index);
-
-  //     // get the reordered chapters
-  //     const updatedChapters = items.slice(startIndex, endIndex + 1);
-
-  //     // set the chapters to the updated chapters
-  //     // setChapters(items);
-
-  //     // create a bulk update data array. This is the data that will be sent to the server
-  //     // map over the updated chapters and return an object with the id and position
-  //     const bulkUpdateData = updatedChapters.map((chapter) => ({
-  //       id: chapter.id,
-  //       position: items.findIndex((item) => item.id === chapter.id)
-  //     }));
-
-  //     console.log('Bulk update data:', bulkUpdateData);
-  //     // call the onReorder function with the bulkUpdateData
-  //     onReorder(bulkUpdateData);
-  //   };
-
   const onDragEnd = (result: DropResult) => {
     // if there is no destination, break out of the function
     if (!result.destination) return;
