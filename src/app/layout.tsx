@@ -10,6 +10,7 @@ import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import { extractRouterConfig } from 'uploadthing/server';
 import { ourFileRouter } from '@/app/api/uploadthing/core';
 import { Analytics } from '@vercel/analytics/react';
+import { ConfettiProvider } from '@/components/providers/confetti-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,6 +37,8 @@ export default function RootLayout({
              */
             routerConfig={extractRouterConfig(ourFileRouter)}
           />
+          {/* confetti is displayed when course is published */}
+          <ConfettiProvider />
           {/* // TODO: replace react-hot-toast with sonner */}
           <ToastProvider />
           {children}
