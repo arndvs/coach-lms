@@ -4,21 +4,26 @@ const database = new PrismaClient();
 
 async function main() {
   try {
+    // seeds the database with a list of categories
     await database.category.createMany({
       data: [
         { name: 'Computer Science' },
-
         { name: 'Music' },
-
         { name: 'Fitness' },
-
         { name: 'Photography' },
-
         { name: 'Accounting' },
-
         { name: 'Engineering' },
-
-        { name: 'Filming' }
+        { name: 'Filming' },
+        { name: 'Preconception' },
+        { name: 'Prenatal' },
+        { name: 'Birth' },
+        { name: 'Postpartum' },
+        { name: 'Fertility' },
+        { name: 'Pregnancy' },
+        { name: 'Breastfeeding' },
+        { name: 'Nutrition' },
+        { name: 'Yoga' },
+        { name: 'Wellness' }
       ]
     });
 
