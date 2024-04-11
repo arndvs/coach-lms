@@ -6,13 +6,14 @@ import { LogOut } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+
 import { SearchInput } from './search-input';
 
 export const NavbarRoutes = () => {
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith('/teacher');
-  const isPlayerPage = pathname?.includes('/chapter');
+  const isCoursePage = pathname?.includes('/courses');
   const isSearchPage = pathname === '/search';
 
   return (
@@ -23,7 +24,7 @@ export const NavbarRoutes = () => {
         </div>
       )}
       <div className="ml-auto flex gap-x-2">
-        {isTeacherPage || isPlayerPage ? (
+        {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button
               size="sm"
